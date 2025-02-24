@@ -161,6 +161,33 @@ body {
 .movie-detail img {
     max-width: 300px;
 }
+
+.movie-info {
+  font-family: 'Lexend', sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+
+.movie-title-detail {
+  color: var(--text-yellow); 
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+
+.movie-rating {
+  color: var(--text-yellow);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+
+.movie-plot {
+  margin-bottom: 1.5rem;
+}
+
   
 @media (max-width: 768px) {
     .movie-detail {

@@ -1,46 +1,42 @@
 
-import { renderTrailers } from './caroussel.js';
-import { createMovieCard } from './movieCard.js';
 import { addFavorite, removeFavorite, getFavorites } from './favorites.js';
 
 export function renderMovieCard(movie, container, isFavorite = false) {
-  // Store the current favorite state locally
-  let currentFavoriteStatus = isFavorite;
+  
+  const poster = (movie.Poster && movie.Poster !== 'N/A') 
+                   ? movie.Poster 
+                   : './icons/missing-poster.svg';
+
+  
   const card = document.createElement('article');
   card.className = 'movie-card';
   card.innerHTML = `
     <div class="poster-container">
-      <img src="${movie.Poster}" alt="${movie.Title} poster" class="movie-poster">
+      <img src="${poster}" alt="${movie.Title} poster" class="movie-poster">
       <button class="favorite-btn">
-        <i class="${currentFavoriteStatus ? 'fa-solid fa-star' : 'fa-regular fa-star'}"></i>
+        <i class="${isFavorite ? 'fa-solid fa-star' : 'fa-regular fa-star'}"></i>
       </button>
     </div>
     <h3 class="movie-title">${movie.Title}</h3>
   `;
   
-  // Favorite button event listener
+  
   const favBtn = card.querySelector('.favorite-btn');
   favBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent triggering card click
-    if (currentFavoriteStatus) {
+    e.stopPropagation(); 
+    if (isFavorite) {
       removeFavorite(movie.imdbID);
-      currentFavoriteStatus = false;
     } else {
       addFavorite(movie);
-      currentFavoriteStatus = true;
     }
-    // Update the star icon based on the new state
+   
     const iconEl = favBtn.querySelector('i');
-    iconEl.className = currentFavoriteStatus ? 'fa-solid fa-star' : 'fa-regular fa-star';
-
-    // If on the favorites page, remove the card when unfavorited
-    const currentPage = window.location.pathname.split('/').pop();
-    if (currentPage === 'favorites.html' && !currentFavoriteStatus) {
-      card.remove();
-    }
+    iconEl.className = isFavorite 
+      ? 'fa-regular fa-star'
+      : 'fa-solid fa-star';
   });
   
-  // Navigate to movie details on card click
+  
   card.addEventListener('click', (e) => {
     if (!e.target.closest('.favorite-btn')) {
       window.location.href = `movie.html?id=${movie.imdbID}`;
@@ -49,6 +45,7 @@ export function renderMovieCard(movie, container, isFavorite = false) {
   
   container.appendChild(card);
 }
+
 
 
 export function renderTopMovies(movies) {
@@ -68,15 +65,20 @@ export function renderSearchResults(results) {
 export function renderMovieDetails(movie) {
   const container = document.getElementById('movieInformation');
   if (!container) return;
+  
+  const poster = (movie.Poster && movie.Poster !== 'N/A')
+                 ? movie.Poster
+                 : './icons/missing-poster.svg';
+  
   container.innerHTML = `
     <div class="movie-detail">
-      <img src="${movie.Poster}" alt="${movie.Title} poster">
+      <img src="${poster}" alt="${movie.Title} poster" class="movie-detail-poster">
       <div class="movie-info">
-        <h1>${movie.Title} (${movie.Year})</h1>
-        <p>${movie.Plot}</p>
-        <p>IMDb Rating: ${movie.imdbRating}</p>
-        <p>Regissör: ${movie.Director}</p>
-        <p>Skådespelare: ${movie.Actors}</p>
+        <h1 class="movie-title-detail">${movie.Title} (${movie.Year})</h1>
+        <p class="movie-plot">${movie.Plot}</p>
+        <p class="movie-rating">IMDb Rating: ${movie.imdbRating}</p>
+        <p class="movie-director">Regissör: ${movie.Director}</p>
+        <p class="movie-actors">Skådespelare: ${movie.Actors}</p>
       </div>
     </div>
   `;
