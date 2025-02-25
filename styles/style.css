@@ -4,7 +4,6 @@
 
 :root {
     --header-grey: #121212;
-    
     --primary-bg: #000000;
     --primary-white: #ffffff;
     --primary-grey: #1A1A1A;
@@ -85,6 +84,7 @@ body {
 }
 
 
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -150,7 +150,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Movie details */
+
 .movie-detail {
     display: flex;
     gap: 2rem;
@@ -183,14 +183,50 @@ body {
   margin-bottom: 1rem;
 }
 
-
 .movie-plot {
   margin-bottom: 1.5rem;
 }
 
-  
-@media (max-width: 768px) {
-    .movie-detail {
-      flex-direction: column;
-    }
+/* --- Responsiv grid för filmkort --- */
+@media screen and (max-width: 1200px) {
+.card-container {
+  grid-template-columns: repeat(3, 1fr);
+}
+}
+
+@media screen and (max-width: 900px) {
+.card-container {
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media screen and (max-width: 600px) {
+.card-container {
+  grid-template-columns: 1fr; 
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+}
+
+/* --- Responsiv header --- */
+@media screen and (max-width: 600px) {
+.header__flex {
+  flex-direction: column; 
+  align-items: center;    
+}
+
+.header__logo {
+  margin-bottom: 1rem; 
+}
+
+.header__form {
+  margin-top: 1rem;
+  margin-bottom: 1rem; 
+  width: 90%;
+  justify-content: center;
+}
+
+.header__input {
+  width: 100%;
+}
 }
